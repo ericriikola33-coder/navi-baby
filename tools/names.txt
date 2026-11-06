@@ -1,0 +1,327 @@
+Alice|f|av ädel börd|Germanskt|k
+Maja|f|variant av Maria; även namnet på en grekisk gudinna|Grekiskt|n
+Elsa|f|kortform av Elisabet – ”Gud är min ed”|Hebreiskt|k
+Astrid|f|gudomligt vacker|Fornnordiskt|k
+Freja|f|kärlekens gudinna – ”härskarinna”|Fornnordiskt|n
+Ebba|f|kortform av Eberharda – ”stark som ett vildsvin”|Germanskt|k
+Wilma|f|kortform av Wilhelmina – ”vilja + hjälm”|Germanskt|n
+Olivia|f|olivträd, en symbol för fred|Latin|n
+Saga|f|berättelse; även en gudinna i nordisk mytologi|Fornnordiskt|n
+Signe|f|seger|Fornnordiskt|k
+Ingrid|f|guden Ing + vacker|Fornnordiskt|k
+Sigrid|f|seger + vacker|Fornnordiskt|k
+Tilda|f|kortform av Matilda – ”styrka i strid”|Germanskt|n
+Vera|f|tro|Ryskt|k
+Juni|f|efter sommarmånaden|Svenskt|n
+Iris|f|regnbåge|Grekiskt|n
+Stella|f|stjärna|Latin|n
+Luna|f|måne|Latin|n
+Nora|f|kortform av Eleonora|Grekiskt|n
+Edith|f|rikedom + strid|Fornengelskt|k
+Agnes|f|ren, kysk|Grekiskt|k
+Hedda|f|kortform av Hedvig – ”strid”|Germanskt|k
+Linnea|f|efter blomman linnea, uppkallad efter Carl von Linné|Svenskt|n
+Klara|f|klar, ljus|Latin|k
+Emilia|f|av den romerska släkten Aemilius – ”flitig”|Latin|n
+Ellen|f|variant av Helena – ”fackla, ljus”|Grekiskt|k
+Vilda|f|vild, fri|Svenskt|n
+Liv|f|liv, skydd|Fornnordiskt|n
+Tyra|f|kopplat till guden Tor|Fornnordiskt|k
+Molly|f|smeknamnsform av Mary/Maria|Engelskt|n
+Ella|f|kortform av bl.a. Elisabet och Eleonora|Germanskt|n
+Ronja|f|känt från Astrid Lindgrens bok|Svenskt|n
+Greta|f|kortform av Margareta – ”pärla”|Grekiskt|k
+Ester|f|stjärna|Persiskt|k
+Elin|f|svensk form av Helena – ”fackla, ljus”|Grekiskt|k
+Karin|f|svensk form av Katarina – ”ren”|Grekiskt|k
+Märta|f|svensk form av Marta – ”härskarinna”|Arameiskt|k
+Dagny|f|ny dag|Fornnordiskt|k
+Solveig|f|sol + kraft|Fornnordiskt|k
+Hulda|f|huld, vänlig|Fornnordiskt|k
+Ragnhild|f|gudarnas råd + strid|Fornnordiskt|k
+Svea|f|personifikationen av Sverige – ”Moder Svea”|Svenskt|k
+Rut|f|väninna|Hebreiskt|k
+Gunhild|f|strid + strid|Fornnordiskt|k
+Ingeborg|f|guden Ing + skydd|Fornnordiskt|k
+Birgitta|f|den höga, upphöjda|Keltiskt|k
+Margit|f|form av Margareta – ”pärla”|Grekiskt|k
+Majken|f|smeknamnsform av Maria|Svenskt|k
+Hilma|f|kortform av Vilhelmina – ”vilja + hjälm”|Germanskt|k
+Tekla|f|Guds ära|Grekiskt|k
+Matilda|f|styrka i strid|Germanskt|k
+Viola|f|viol, blomman|Latin|k
+Ida|f|arbete, flit|Germanskt|k
+Alma|f|närande, givmild|Latin|k
+Tove|f|kopplat till guden Tor|Fornnordiskt|k
+Stina|f|kortform av Kristina – ”kristen”|Grekiskt|k
+Inga|f|efter guden Ing|Fornnordiskt|k
+Anna|f|nåd|Hebreiskt|k
+Elisabet|f|Gud är min ed|Hebreiskt|k
+Nova|f|ny|Latin|n
+Mila|f|kär, älskad|Slaviskt|n
+Isla|f|ö|Spanskt|n
+Thea|f|gudinna|Grekiskt|n
+Lilly|f|efter blomman lilja|Engelskt|n
+Siri|f|nordisk form av Sigrid – ”seger + vacker”|Fornnordiskt|n
+Ines|f|spansk form av Agnes – ”ren”|Spanskt|n
+Melina|f|honung|Grekiskt|n
+Ellie|f|kortform av Elin och Eleonora|Engelskt|n
+Alva|f|alv, älva|Fornnordiskt|n
+Engla|f|ängel|Svenskt|n
+Hanna|f|nåd|Hebreiskt|n
+Sofia|f|visdom|Grekiskt|n
+Amanda|f|värd att älska|Latin|n
+Mira|f|underbar|Latin|n
+Ayla|f|ljusringen runt månen|Turkiskt|n
+Leona|f|lejoninna|Latin|n
+Celine|f|himmelsk|Franska|n
+Felicia|f|lycklig|Latin|n
+Elise|f|kortform av Elisabet|Franska|n
+Aurora|f|gryning|Latin|n
+William|m|vilja + hjälm|Germanskt|n
+Noah|m|vila, ro|Hebreiskt|n
+Hugo|m|sinne, förstånd|Germanskt|n
+Oscar|m|gudens spjut|Fornnordiskt|k
+Liam|m|irländsk kortform av William|Irländskt|n
+Elias|m|Herren är min Gud|Hebreiskt|n
+Lucas|m|ljus|Latin|n
+Alfred|m|alvernas råd|Fornengelskt|k
+Ludvig|m|berömd krigare|Germanskt|k
+Axel|m|kortform av Absalon – ”fadern är frid”|Hebreiskt|k
+Theo|m|gud|Grekiskt|n
+Vincent|m|segrande|Latin|n
+Arvid|m|örn + skog|Fornnordiskt|k
+Sixten|m|seger + sten|Fornnordiskt|k
+Ture|m|kopplat till guden Tor|Fornnordiskt|k
+Leo|m|lejon|Latin|n
+Isak|m|han skrattar|Hebreiskt|k
+Viktor|m|segrare|Latin|k
+Albin|m|vit, ljus|Latin|k
+Folke|m|folk|Fornnordiskt|k
+Ivar|m|idegran + krigare|Fornnordiskt|k
+Otto|m|rikedom, egendom|Germanskt|k
+Harald|m|härskare över hären|Fornnordiskt|k
+Gustav|m|goternas stöd|Fornnordiskt|k
+Erik|m|ensam härskare|Fornnordiskt|k
+Nils|m|kortform av Nikolaus – ”folkets seger”|Grekiskt|k
+Sigge|m|kortform av Sigurd – ”seger + väktare”|Fornnordiskt|k
+Loke|m|gud i nordisk mytologi|Fornnordiskt|n
+Ebbe|m|kortform av Eberhard – ”stark som ett vildsvin”|Germanskt|k
+Henry|m|hemmets härskare|Germanskt|n
+Frans|m|fransman, fri|Latin|k
+Gösta|m|svensk form av Gustav|Svenskt|k
+Bertil|m|lysande|Germanskt|k
+Sven|m|ung man|Fornnordiskt|k
+Karl|m|fri man|Germanskt|k
+Olof|m|förfädernas arvinge|Fornnordiskt|k
+Gunnar|m|strid + krigare|Fornnordiskt|k
+Einar|m|ensam krigare|Fornnordiskt|k
+Holger|m|holme + spjut|Fornnordiskt|k
+Valdemar|m|härskare + berömd|Germanskt|k
+Edvard|m|rikedom + väktare|Fornengelskt|k
+August|m|upphöjd, vördnadsvärd|Latin|k
+Josef|m|Gud ska lägga till|Hebreiskt|k
+Knut|m|knut|Fornnordiskt|k
+Birger|m|hjälpare, beskyddare|Fornnordiskt|k
+Ragnar|m|gudarnas råd + krigare|Fornnordiskt|k
+Tor|m|åskans gud|Fornnordiskt|k
+Algot|m|alv + gote|Fornnordiskt|k
+Elof|m|ensam arvinge|Fornnordiskt|k
+Hjalmar|m|hjälm + krigare|Fornnordiskt|k
+Ingemar|m|guden Ing + berömd|Fornnordiskt|k
+Wilhelm|m|vilja + hjälm|Germanskt|k
+Emil|m|av den romerska släkten Aemilius – ”flitig”|Latin|k
+Melker|m|ljusets konung|Hebreiskt|k
+Tage|m|den som tar emot|Fornnordiskt|k
+Måns|m|svensk form av Magnus – ”stor”|Latin|k
+Edvin|m|rikedom + vän|Fornengelskt|k
+Olle|m|smeknamnsform av Olof|Svenskt|k
+Valter|m|härskare över hären|Germanskt|k
+Bo|m|bofast, den som bor|Fornnordiskt|k
+Matteo|m|Guds gåva|Italienskt|n
+Kian|m|forntida|Irländskt|n
+Levi|m|förenad|Hebreiskt|n
+Mio|m|min|Italienskt|n
+Neo|m|ny|Grekiskt|n
+Adam|m|människa|Hebreiskt|n
+Jack|m|smeknamn för John – ”Gud är nådig”|Engelskt|n
+Casper|m|skattmästare|Persiskt|n
+Benjamin|m|lyckans son|Hebreiskt|n
+Dante|m|uthållig|Italienskt|n
+Leon|m|lejon|Grekiskt|n
+Jonas|m|duva|Hebreiskt|n
+Ossian|m|liten hjort|Iriskt|n
+Tim|m|kortform av Timoteus – ”som ärar Gud”|Grekiskt|n
+Ville|m|kortform av Vilhelm – ”vilja + hjälm”|Svenskt|n
+Vide|m|efter videbusken|Svenskt|n
+Robin|u|kortform av Robert – ”strålande berömmelse”|Germanskt|n
+Alex|u|försvarare|Grekiskt|n
+Charlie|u|kortform av Karl/Charlotte – ”fri man”|Germanskt|n
+Kim|u|kortform av Joakim|Hebreiskt|n
+Sasha|u|kortform av Alexander/Alexandra – ”försvarare”|Ryskt|n
+Eli|u|upphöjd|Hebreiskt|n
+Noel|u|jul|Franska|n
+Billie|u|kortform av William/Wilhelmina|Engelskt|n
+Ellis|u|variant av Elias|Engelskt|n
+Love|u|modernt svenskt namn|Svenskt|n
+Mika|u|kortform av Mikael – ”vem är som Gud?”|Hebreiskt|n
+Ariel|u|Guds lejon|Hebreiskt|n
+Sam|u|kortform av Samuel/Samantha|Hebreiskt|n
+Frankie|u|kortform av Frans/Francesca|Engelskt|n
+Rio|u|flod|Spanskt|n
+Remy|u|roddare|Franska|n
+Nikita|u|segrande|Grekiskt|n
+Indigo|u|efter färgen|Engelskt|n
+Sky|u|himmel|Engelskt|n
+Rowan|u|rönn, trädet|Irländskt|n
+Jamie|u|kortform av James/Jakob|Engelskt|n
+Nour|u|ljus|Arabiskt|n
+Ari|u|örn|Fornnordiskt|n
+Kai|u|hav|Hawaiiskt|n
+Alexis|u|försvarare|Grekiskt|n
+Morgan|u|havet|Walesiskt|n
+Elliot|m|engelsk variant av Elias|Engelskt|n
+Julian|m|av den romerska släkten Julius|Latin|n
+Sebastian|m|vördnadsvärd|Grekiskt|n
+Gabriel|m|Gud är min styrka|Hebreiskt|n
+Oliver|m|olivträd|Latin|n
+Felix|m|lycklig|Latin|n
+Samuel|m|hörd av Gud|Hebreiskt|n
+Max|m|kortform av Maximilian – ”den störste”|Latin|n
+Atlas|m|titan i grekisk mytologi|Grekiskt|n
+Amalia|f|arbete, flit|Germanskt|k
+Augusta|f|upphöjd, vördnadsvärd|Latin|k
+Beata|f|lycklig, välsignad|Latin|k
+Cecilia|f|av den romerska släkten Caecilius|Latin|k
+Dagmar|f|dag + berömd|Fornnordiskt|k
+Emma|f|hel, fullständig|Germanskt|k
+Frida|f|frid|Germanskt|k
+Gerda|f|inhägnad, skydd|Fornnordiskt|k
+Hedvig|f|strid + strid|Germanskt|k
+Helga|f|helig|Fornnordiskt|k
+Hildur|f|strid|Fornnordiskt|k
+Irma|f|hel, stor|Germanskt|k
+Judit|f|kvinna från Juda|Hebreiskt|k
+Katarina|f|ren|Grekiskt|k
+Kerstin|f|svensk form av Kristina – ”kristen”|Grekiskt|k
+Lovisa|f|berömd krigare|Germanskt|k
+Lydia|f|kvinna från landskapet Lydien|Grekiskt|k
+Magdalena|f|kvinna från Magdala|Hebreiskt|k
+Margareta|f|pärla|Grekiskt|k
+Ottilia|f|rikedom|Germanskt|k
+Rakel|f|tacka, får|Hebreiskt|k
+Sara|f|furstinna|Hebreiskt|k
+Sigrun|f|seger + hemlighet|Fornnordiskt|k
+Siv|f|gudinna, Tors hustru i nordisk mytologi|Fornnordiskt|k
+Sonja|f|rysk form av Sofia – ”visdom”|Ryskt|k
+Teodora|f|Guds gåva|Grekiskt|k
+Ulrika|f|arv + härskare|Germanskt|k
+Ulla|f|smeknamnsform av Ulrika|Svenskt|k
+Valborg|f|härskande + skydd|Germanskt|k
+Vendela|f|efter folkgruppen vandaler|Germanskt|k
+Vilhelmina|f|vilja + hjälm|Germanskt|k
+Edla|f|ädel|Germanskt|k
+Hjördis|f|svärd + gudinna|Fornnordiskt|k
+Asta|f|kortform av Astrid|Fornnordiskt|k
+Bodil|f|bot + strid|Fornnordiskt|k
+Elna|f|kortform av Helena – ”fackla, ljus”|Grekiskt|k
+Ylva|f|varghona|Fornnordiskt|k
+Ingela|f|smeknamnsform av Ingeborg och Ingrid|Svenskt|k
+Tora|f|kopplat till guden Tor|Fornnordiskt|k
+Embla|f|den första kvinnan i nordisk mytologi|Fornnordiskt|n
+Idun|f|gudinnan som vaktar ungdomens äpplen|Fornnordiskt|n
+Ellinor|f|variant av Eleonora|Grekiskt|n
+Emmy|f|smeknamnsform av Emma|Germanskt|n
+Lova|f|modernt svenskt namn|Svenskt|n
+Minna|f|kortform av Vilhelmina|Germanskt|n
+Nellie|f|smeknamnsform av Helena och Eleonora|Engelskt|n
+Rosa|f|ros|Latin|n
+Tuva|f|kopplat till guden Tor|Fornnordiskt|n
+Tindra|f|tindra, glittra|Svenskt|n
+Vanja|f|rysk smeknamnsform av Ivan – ”Gud är nådig”|Ryskt|n
+Lykke|f|lycka|Danskt|n
+Lilja|f|lilja|Fornnordiskt|n
+Edda|f|efter de isländska Eddadikterna|Isländskt|n
+Juno|f|romersk gudinna|Latin|n
+Aria|f|luft; melodi|Italienskt|n
+Noomi|f|min ljuvlighet|Hebreiskt|n
+Emelie|f|variant av Emilia|Latin|n
+Elina|f|variant av Helena – ”fackla, ljus”|Grekiskt|n
+Julia|f|av den romerska släkten Julius|Latin|n
+Jasmine|f|efter blomman jasmin|Persiskt|n
+Zara|f|variant av Sara – ”furstinna”|Hebreiskt|n
+Bianca|f|vit|Italienskt|n
+Elsie|f|smeknamnsform av Elisabet|Engelskt|n
+Lea|f|bibliskt namn|Hebreiskt|n
+Anders|m|manlig|Grekiskt|k
+Arne|m|örn|Fornnordiskt|k
+Elis|m|variant av Elias|Hebreiskt|k
+Evert|m|vildsvin + stark|Germanskt|k
+Fredrik|m|fridsfurste|Germanskt|k
+Gottfrid|m|Gud + frid|Germanskt|k
+Halvar|m|sten + väktare|Fornnordiskt|k
+Herman|m|krigare|Germanskt|k
+Hilding|m|strid|Fornnordiskt|k
+Ingvar|m|guden Ing + krigare|Fornnordiskt|k
+Johan|m|Gud är nådig|Hebreiskt|k
+Konrad|m|djärv + råd|Germanskt|k
+Lennart|m|lejon + stark|Germanskt|k
+Magnus|m|stor|Latin|k
+Mauritz|m|från Mauretanien|Latin|k
+Petter|m|klippa|Grekiskt|k
+Rune|m|hemlighet|Fornnordiskt|k
+Rutger|m|berömd + spjut|Germanskt|k
+Severin|m|sträng, allvarlig|Latin|k
+Sten|m|sten|Fornnordiskt|k
+Sune|m|son|Fornnordiskt|k
+Torsten|m|guden Tor + sten|Fornnordiskt|k
+Ulf|m|varg|Fornnordiskt|k
+Verner|m|skydd + krigare|Germanskt|k
+Vilgot|m|vilja + gote|Fornnordiskt|k
+Åke|m|förfader|Fornnordiskt|k
+Tore|m|kopplat till guden Tor|Fornnordiskt|k
+Håkan|m|hög + släkt|Fornnordiskt|k
+Göran|m|svensk form av Georg – ”jordbrukare”|Grekiskt|k
+Jakob|m|han håller i hälen|Hebreiskt|k
+Mårten|m|svensk form av Martin – ”tillägnad Mars”|Latin|k
+Tobias|m|Gud är god|Hebreiskt|k
+Simon|m|han hör|Hebreiskt|k
+Daniel|m|Gud är min domare|Hebreiskt|k
+David|m|älskad|Hebreiskt|k
+Adrian|m|från staden Hadria|Latin|n
+Alvin|m|alv + vän|Fornengelskt|n
+Ben|m|kortform av Benjamin|Hebreiskt|n
+Dexter|m|högerhänt, skicklig|Latin|n
+Eddie|m|smeknamnsform av Edvard och Edvin|Engelskt|n
+Emir|m|furste|Arabiskt|n
+Ezra|m|hjälp|Hebreiskt|n
+Finn|m|ljus, ljushårig|Irländskt|n
+Frank|m|fri|Germanskt|n
+Hamza|m|stark|Arabiskt|n
+Jonathan|m|Gud har gett|Hebreiskt|n
+Linus|m|lin|Grekiskt|n
+Omar|m|liv, långt liv|Arabiskt|n
+Rasmus|m|älskad|Grekiskt|n
+Teo|m|variant av Theo – ”gud”|Grekiskt|n
+Valentin|m|stark, frisk|Latin|n
+Wille|m|smeknamnsform av William och Wilhelm|Svenskt|n
+Zakaria|m|Gud har kommit ihåg|Hebreiskt|n
+Ibrahim|m|arabisk form av Abraham – ”många folks fader”|Arabiskt|n
+Yusuf|m|arabisk form av Josef|Arabiskt|n
+Ali|m|upphöjd|Arabiskt|n
+Mohammed|m|den prisade|Arabiskt|n
+Harry|m|smeknamnsform av Henry – ”hemmets härskare”|Engelskt|n
+Arthur|m|ofta kopplat till ”björn”|Keltiskt|n
+Bruno|m|brun|Germanskt|n
+Joel|m|Herren är Gud|Hebreiskt|n
+Nathan|m|han har gett|Hebreiskt|n
+Eden|u|njutning, paradis|Hebreiskt|n
+Jo|u|kortform av bl.a. Johan och Johanna|Hebreiskt|n
+River|u|flod|Engelskt|n
+Sage|u|salvia; vis|Engelskt|n
+Kit|u|kortform av Kristoffer och Katarina|Engelskt|n
+Lou|u|kortform av Louise och Louis|Franska|n
+Stevie|u|kortform av Stefan och Stephanie – ”krona”|Engelskt|n
+Toni|u|kortform av Anton och Antonia|Latin|n
+Elia|u|variant av Elias|Hebreiskt|n
+Aspen|u|asp, trädet|Engelskt|n

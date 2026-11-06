@@ -1,0 +1,61 @@
+:root{
+  color-scheme: only light;
+  --bg:#F6F1EA; --card:#FFFDF9; --ink:#2B2A28; --muted:#6E675E;
+  --rose:#D98B7A; --rose-d:#B9604F; --sage:#8FA58C; --sage-d:#5F7A5C;
+  --line:#E7DED2; --shadow:0 10px 30px rgba(60,45,30,.10);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif;line-height:1.6;font-size:17px}
+a{color:var(--rose-d)}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px}
+.top{border-bottom:1px solid var(--line);background:var(--bg);position:sticky;top:0;z-index:5}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;height:60px}
+.logo{font-family:"Fraunces",serif;font-size:22px;font-weight:600;letter-spacing:-.3px;color:var(--ink);text-decoration:none}
+.logo span{color:var(--rose)}
+.top nav{display:flex;gap:16px;align-items:center;font-size:15px}
+.top nav a{color:var(--ink);text-decoration:none}
+.top nav a.cta{background:var(--ink);color:#fff;padding:8px 14px;border-radius:999px;font-weight:700;white-space:nowrap}
+@media (max-width:520px){ .top nav a.hide-s{display:none} }
+main{padding:22px 0 40px}
+.crumbs{font-size:14px;color:var(--muted);margin-bottom:6px}
+.crumbs a{color:var(--muted)}
+h1,h2,h3{font-family:"Fraunces",serif;font-weight:600;letter-spacing:-.4px;line-height:1.15}
+h1{font-size:40px;margin:6px 0 10px}
+h1.name{font-size:64px;letter-spacing:-1.5px;margin:4px 0 6px}
+h2{font-size:26px;margin:34px 0 10px}
+h3{font-size:20px;margin:22px 0 6px}
+.lead{font-size:19px;color:var(--ink)}
+.muted{color:var(--muted)}
+.tag{display:inline-block;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);background:#EDE5DA;padding:4px 10px;border-radius:999px;margin-right:6px}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:22px 0}
+.fact{background:var(--card);border-radius:14px;padding:12px 14px;box-shadow:0 2px 10px rgba(60,45,30,.05)}
+.fact b{display:block;font-size:12px;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);font-weight:500}
+.fact span{font-size:17px}
+.fact.wide{grid-column:1/-1}
+.box{background:var(--card);border-radius:20px;padding:20px;box-shadow:var(--shadow);margin:26px 0}
+.box h2{margin-top:0}
+.btn{display:inline-block;background:var(--ink);color:#fff;text-decoration:none;font-weight:700;padding:13px 20px;border-radius:14px;margin-top:6px}
+.btn.alt{background:#F2E4DE;color:var(--rose-d)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.chips a{background:var(--card);border:1px solid var(--line);padding:7px 13px;border-radius:999px;text-decoration:none;color:var(--ink);font-size:15px}
+.chips a:active{background:#EDE5DA}
+.poster{display:flex;justify-content:center;background:#E9E1D6;border-radius:18px;padding:22px;margin:16px 0}
+.poster svg{width:100%;max-width:260px;height:auto;box-shadow:0 8px 24px rgba(0,0,0,.15)}
+.letters{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 6px}
+.letters a{width:34px;height:34px;display:flex;align-items:center;justify-content:center;background:var(--card);border-radius:9px;text-decoration:none;color:var(--ink);font-weight:700;font-size:15px;border:1px solid var(--line)}
+.namelist{list-style:none;padding:0;margin:8px 0 0;display:grid;grid-template-columns:1fr;gap:8px}
+@media (min-width:620px){ .namelist{grid-template-columns:1fr 1fr} }
+.namelist a{display:block;background:var(--card);border-radius:14px;padding:11px 14px;text-decoration:none;color:var(--ink);box-shadow:0 2px 8px rgba(60,45,30,.05)}
+.namelist a b{font-family:"Fraunces",serif;font-size:20px;font-weight:600}
+.namelist a small{display:block;color:var(--muted);font-size:14px;line-height:1.35}
+.letter-h{font-family:"Fraunces",serif;font-size:24px;margin:26px 0 4px;scroll-margin-top:70px}
+.cats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.cats a{background:var(--card);border-radius:16px;padding:14px;text-decoration:none;color:var(--ink);box-shadow:0 2px 10px rgba(60,45,30,.05)}
+.cats a b{display:block;font-family:"Fraunces",serif;font-size:19px}
+.cats a small{color:var(--muted);font-size:14px}
+.prose p,.prose li{max-width:65ch}
+footer.site{border-top:1px solid var(--line);padding:26px 0 40px;font-size:15px;color:var(--muted)}
+footer.site .cols{display:grid;grid-template-columns:1fr 1fr;gap:6px 20px}
+footer.site a{color:var(--ink);text-decoration:none}
+footer.site .small{margin-top:16px;font-size:13px}

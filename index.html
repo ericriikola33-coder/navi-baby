@@ -33,10 +33,11 @@
     --line:#E7DED2; --shadow:0 10px 30px rgba(60,45,30,.12);
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  html,body{margin:0;height:100%}
+  html{background:#F6F1EA}
+  html,body{margin:0;min-height:100%}
   body{background:var(--bg);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif;
-    display:flex;justify-content:center;overscroll-behavior:none}
-  .app{width:100%;max-width:440px;min-height:100%;padding:18px 18px 28px;display:flex;flex-direction:column}
+    display:flex;flex-direction:column;align-items:center;overscroll-behavior:none}
+  .app{width:100%;max-width:440px;min-height:100vh;min-height:100dvh;padding:18px 18px 28px;display:flex;flex-direction:column}
   header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
   .logo{font-family:"Fraunces",serif;font-size:22px;font-weight:600;letter-spacing:-.3px}
   .logo span{color:var(--rose)}
@@ -89,7 +90,15 @@
   .matches{list-style:none;padding:0;margin:14px 0 0}
   .matches li{background:var(--card);border-radius:16px;padding:14px 16px;margin-bottom:10px;display:flex;
     align-items:center;justify-content:space-between;box-shadow:0 2px 10px rgba(60,45,30,.06)}
-  .matches .n{font-family:"Fraunces",serif;font-size:24px;font-weight:600}
+  .matches .n{font-family:"Fraunces",serif;font-size:24px;font-weight:600;color:var(--ink);text-decoration:none;display:block}
+  .seo{width:100%;max-width:440px;padding:8px 18px 36px;border-top:1px solid var(--line)}
+  .seo h2{font-family:"Fraunces",serif;font-weight:600;font-size:22px;margin:22px 0 8px}
+  .seo p,.seo li{color:var(--muted);line-height:1.55;font-size:15px}
+  .seo ol{padding-left:20px;margin:0}
+  .seo .cats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+  .seo .cats a{background:var(--card);border-radius:12px;padding:11px 12px;text-decoration:none;color:var(--ink);font-weight:500;font-size:15px;box-shadow:0 2px 8px rgba(60,45,30,.05)}
+  .seo .links{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:22px;font-size:14px}
+  .seo .links a{color:var(--muted)}
   .matches .m{font-size:13px;color:var(--muted);margin-top:2px}
   .poster-btn{border:0;background:#F2E4DE;color:var(--rose-d);font:inherit;font-weight:700;font-size:13px;
     padding:9px 12px;border-radius:10px;cursor:pointer;white-space:nowrap;margin-left:10px}
@@ -117,6 +126,22 @@
 </head>
 <body>
 <div class="app" id="app"></div>
+<section class="seo">
+  <h2>Så funkar det</h2>
+  <ol>
+    <li>Du swipar babynamn – höger för ja, vänster för nej.</li>
+    <li>Du skickar en länk till din partner, som swipar samma namn utan att se dina svar.</li>
+    <li>Ni ser bara de namn ni båda gillade. Gratis, utan app och utan konto.</li>
+  </ol>
+  <h2>Bläddra bland namnen</h2>
+  <p>Läs om betydelse och ursprung för över 300 babynamn.</p>
+  <div class="cats">
+    <a href="/flicknamn/">Flicknamn</a><a href="/pojknamn/">Pojknamn</a>
+    <a href="/konsneutrala-namn/">Könsneutrala</a><a href="/nordiska-namn/">Nordiska namn</a>
+    <a href="/klassiska-namn/">Klassiska namn</a><a href="/moderna-namn/">Moderna namn</a>
+  </div>
+  <div class="links"><a href="/namn/">Alla namn A–Ö</a><a href="/om/">Om navi.baby</a><a href="/integritet/">Integritetspolicy</a><a href="/kontakt/">Kontakt</a></div>
+</section>
 
 <div class="modal" id="modal">
   <div class="sheet">
@@ -474,6 +499,7 @@ function track(name){ try{ if(window.goatcounter && window.goatcounter.count) wi
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
 function load(){ try{ const s = JSON.parse(localStorage.getItem(KEY)); if(s && s.phase){ if(!s.era) s.era="all"; if(!s.mode) s.mode="link"; return s; } return null; }catch(e){ return null; } }
 function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+function slug(s){ return s.toLowerCase().replace(/å|ä/g,"a").replace(/ö/g,"o").replace(/é/g,"e").replace(/ü/g,"u").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,""); }
 function esc(s){ return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
 function pname(i){ return S.players[i] && S.players[i].trim() ? S.players[i].trim() : (i===0?"Förälder 1":"Förälder 2"); }
 
@@ -505,7 +531,7 @@ function renderStart(){
     .map(([v,l])=>`<button class="${S.mode===v?"on":""}" onclick="setM('${v}')">${l}</button>`).join("");
   const link = S.mode==="link";
   const inputs = link
-    ? `<label class="f">Ditt namn</label><input type="text" id="p0" placeholder="T.ex. Eric" value="${esc(S.players[0])}">`
+    ? `<label class="f">Ditt namn</label><input type="text" id="p0" placeholder="T.ex. Alex" value="${esc(S.players[0])}">`
     : `<div class="row">
       <div><label class="f">Förälder 1</label><input type="text" id="p0" placeholder="Namn" value="${esc(S.players[0])}"></div>
       <div><label class="f">Förälder 2</label><input type="text" id="p1" placeholder="Namn" value="${esc(S.players[1])}"></div>
@@ -623,7 +649,7 @@ function renderResults(){
   const b = new Set(S.likes[1]);
   const matches = S.likes[0].filter(i=>b.has(i)).sort((x,y)=>NAMES[x][0].localeCompare(NAMES[y][0],"sv"));
   const list = matches.length ? `<ul class="matches">${matches.map(i=>`
-      <li><div><div class="n">${NAMES[i][0]}</div><div class="m">${NAMES[i][2]}</div></div>
+      <li><div><a class="n" href="/namn/${slug(NAMES[i][0])}/">${NAMES[i][0]}</a><div class="m">${NAMES[i][2]}</div></div>
       <button class="poster-btn" onclick="openPoster(${i})">Se som tavla</button></li>`).join("")}</ul>`
     : `<div class="empty">Inga gemensamma favoriter den här gången.<br>Testa en ny runda med fler namn!</div>`;
   app.innerHTML = header() + `
