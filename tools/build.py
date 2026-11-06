@@ -9,7 +9,7 @@ import hashlib, html, json, os, re, datetime
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://navi.baby"
-CONTACT_EMAIL = ""  # fylls i när en kontaktadress är bestämd
+CONTACT_EMAIL = "kontakt@navi.baby"
 TODAY = datetime.date.today().isoformat()
 
 # ---------- data ----------
