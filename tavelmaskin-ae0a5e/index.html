@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="only light">
+<title>Tavelmaskin – navi.baby</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#F6F1EA;--card:#FFFDF9;--ink:#2B2A28;--muted:#6E675E;--line:#E7DED2;--rose-d:#B9604F}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif}
+  .wrap{max-width:480px;margin:0 auto;padding:18px}
+  h1{font-family:"Fraunces",serif;font-size:26px;margin:4px 0 2px}
+  .muted{color:var(--muted);font-size:14px;margin:0 0 14px}
+  label{display:block;font-size:13px;font-weight:500;color:var(--muted);margin:12px 0 5px}
+  input,select{width:100%;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--card);font:inherit;font-size:16px;color:var(--ink)}
+  .seg{display:flex;gap:6px;flex-wrap:wrap}
+  .seg button{flex:1;min-width:70px;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:10px 6px;font:inherit;font-size:14px;cursor:pointer}
+  .seg button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .preview{margin:16px 0;background:#E9E1D6;border-radius:16px;padding:16px;display:flex;justify-content:center}
+  .preview canvas{width:100%;max-width:300px;height:auto;box-shadow:0 8px 24px rgba(0,0,0,.18);background:#fff}
+  .btn{display:block;width:100%;border:0;border-radius:14px;padding:15px;font:inherit;font-weight:700;font-size:16px;background:var(--ink);color:#fff;margin-top:10px;cursor:pointer}
+  .btn.alt{background:#F2E4DE;color:var(--rose-d)}
+  .hint{font-size:13px;color:var(--muted);margin-top:8px;line-height:1.45}
+  .status{font-size:14px;color:var(--rose-d);min-height:20px;margin-top:8px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Tavelmaskin</h1>
+  <p class="muted">Bara för dig. Skapa en namntavla i tryckkvalitet för en beställning.</p>
+
+  <label for="name">Namn</label>
+  <input id="name" type="text" value="Astrid" autocomplete="off">
+
+  <label for="meaning">Betydelse (fylls i automatiskt om namnet finns – går att ändra)</label>
+  <input id="meaning" type="text">
+
+  <label for="origin">Ursprung (liten text överst – lämna tomt för att dölja)</label>
+  <input id="origin" type="text">
+
+  <label for="extra">Extra rad (valfritt, t.ex. Född 12 mars 2027)</label>
+  <input id="extra" type="text">
+
+  <label>Färg</label>
+  <div class="seg" id="colors"></div>
+
+  <label>Format</label>
+  <div class="seg" id="formats"></div>
+
+  <div class="preview"><canvas id="cv"></canvas></div>
+
+  <button class="btn" id="dl">Ladda ner vald fil (PNG)</button>
+  <button class="btn alt" id="share" hidden>Dela / skicka alla tre format</button>
+  <button class="btn alt" id="dlall">Ladda ner alla tre format</button>
+  <div class="status" id="status"></div>
+  <p class="hint">A-formatet passar A4, A3 och A2. 3:4 passar 30×40 cm. 5:7 passar 50×70 cm. Skicka gärna alla tre till kunden.</p>
+</div>
+
+<script>
+const PALETTES = {
+  sand:   {label:"Sand",   bg:"#F3EBDF", ink:"#3B3530", accent:"#C9A27E"},
+  salvia: {label:"Salvia", bg:"#E6EBE2", ink:"#2F3A30", accent:"#8FA58C"},
+  rosa:   {label:"Rosa",   bg:"#F5E4DF", ink:"#4A3330", accent:"#D98B7A"},
+  natt:   {label:"Natt",   bg:"#2E3440", ink:"#F1EBE2", accent:"#C9B48A"}
+};
+// Bredd 3000 px – håller filerna under mobilens gräns för stora bilder.
+const FORMATS = {
+  a:   {label:"A4/A3", w:3000, h:4243, file:"A4-A3"},
+  r34: {label:"30×40", w:3000, h:4000, file:"30x40"},
+  r57: {label:"50×70", w:3000, h:4200, file:"50x70"}
+};
+let color = "sand", format = "a", NAMES = {};
+
+const $ = id => document.getElementById(id);
+const cv = $("cv"), ctx = cv.getContext("2d");
+
+function seg(el, obj, get, set){
+  el.innerHTML = Object.entries(obj).map(([k,v]) => `<button data-k="${k}">${v.label}</button>`).join("");
+  el.querySelectorAll("button").forEach(b => b.onclick = () => { set(b.dataset.k); mark(el, get()); draw(); });
+  mark(el, get());
+}
+function mark(el, k){ el.querySelectorAll("button").forEach(b => b.classList.toggle("on", b.dataset.k === k)); }
+
+function spacedText(c, text, x, y, spacing){
+  // centrerad text med extra teckenavstånd
+  const chars = [...text];
+  const widths = chars.map(ch => c.measureText(ch).width);
+  const total = widths.reduce((a,b)=>a+b,0) + spacing*(chars.length-1);
+  let cx = x - total/2;
+  c.textAlign = "left";
+  chars.forEach((ch,i) => { c.fillText(ch, cx, y); cx += widths[i] + spacing; });
+  c.textAlign = "center";
+}
+
+function wrap(c, text, maxW){
+  const words = text.split(/\s+/); const lines = []; let line = "";
+  for(const w of words){
+    const t = line ? line + " " + w : w;
+    if(c.measureText(t).width > maxW && line){ lines.push(line); line = w; } else line = t;
+  }
+  if(line) lines.push(line);
+  return lines;
+}
+
+function render(c, W, H, d){
+  const p = PALETTES[d.color], s = W/300;
+  c.save();
+  c.fillStyle = p.bg; c.fillRect(0,0,W,H);
+  // ram
+  c.globalAlpha = .6; c.strokeStyle = p.accent; c.lineWidth = 1*s;
+  c.strokeRect(14*s, 14*s, W-28*s, H-28*s);
+  c.globalAlpha = 1;
+  c.textAlign = "center"; c.textBaseline = "alphabetic";
+  // ursprung
+  const top = H*0.14;
+  if(d.origin){
+    c.fillStyle = p.ink; c.globalAlpha = .7;
+    c.font = `500 ${9*s}px "DM Sans"`;
+    spacedText(c, d.origin.toUpperCase(), W/2, top, 3*s);
+    c.globalAlpha = 1;
+  }
+  // namn – anpassa storleken så att det får plats
+  let size = 56*s;
+  c.font = `600 ${size}px Fraunces`;
+  while(c.measureText(d.name).width > W*0.78 && size > 20*s){ size -= 2*s; c.font = `600 ${size}px Fraunces`; }
+  c.fillStyle = p.ink;
+  const nameY = top + (d.origin ? 24*s : 0) + size*0.78;
+  c.fillText(d.name, W/2, nameY);
+  // kvist
+  const lineY = H*0.75;
+  const mid = (nameY + 20*s + lineY - 20*s)/2;
+  const bs = Math.min(s, (lineY - nameY - 50*s)/140);
+  c.save();
+  c.translate(W/2, mid);
+  c.scale(bs, bs);
+  c.translate(-150, -203);
+  c.strokeStyle = p.accent; c.lineWidth = 2; c.lineCap = "round";
+  c.beginPath(); c.moveTo(150,268); c.bezierCurveTo(150,220,152,180,150,138); c.stroke();
+  c.fillStyle = p.accent;
+  [[250,-1],[230,1],[210,-1],[190,1],[170,-1],[150,1]].forEach(([y,sg],k) => {
+    c.globalAlpha = .55 + k*.06;
+    const lx = 150 + sg*22, ly = y - 10;
+    c.beginPath(); c.moveTo(150,y);
+    c.quadraticCurveTo(150+sg*8, y-22, lx, ly);
+    c.quadraticCurveTo(150+sg*20, y+4, 150, y);
+    c.closePath(); c.fill();
+  });
+  c.globalAlpha = 1;
+  c.beginPath(); c.arc(150,134,4,0,Math.PI*2); c.fill();
+  c.restore();
+  // linje
+  c.strokeStyle = p.accent; c.lineWidth = 1.5*s;
+  c.beginPath(); c.moveTo(W/2-20*s, lineY); c.lineTo(W/2+20*s, lineY); c.stroke();
+  // betydelse
+  let y = lineY + 22*s;
+  if(d.meaning){
+    c.fillStyle = p.ink; c.globalAlpha = .85;
+    c.font = `400 ${11*s}px "DM Sans"`;
+    const m = d.meaning.charAt(0).toUpperCase() + d.meaning.slice(1);
+    wrap(c, m, 220*s).forEach(l => { c.fillText(l, W/2, y); y += 16*s; });
+    c.globalAlpha = 1;
+  }
+  if(d.extra){
+    c.fillStyle = p.ink; c.globalAlpha = .7;
+    c.font = `500 ${10*s}px "DM Sans"`;
+    y += 6*s;
+    c.fillText(d.extra, W/2, y);
+    c.globalAlpha = 1;
+  }
+  c.restore();
+}
+
+function data(){
+  return {name: $("name").value.trim() || "Namn", meaning: $("meaning").value.trim(),
+          origin: $("origin").value.trim(), extra: $("extra").value.trim(), color};
+}
+
+function draw(){
+  const f = FORMATS[format];
+  const pw = 600; // förhandsvisning
+  cv.width = pw; cv.height = Math.round(pw * f.h / f.w);
+  render(ctx, cv.width, cv.height, data());
+}
+
+async function fileFor(fk){
+  try{ await document.fonts.ready; }catch(e){}
+  return new Promise(res => {
+    const f = FORMATS[fk];
+    const c = document.createElement("canvas");
+    c.width = f.w; c.height = f.h;
+    render(c.getContext("2d"), f.w, f.h, data());
+    const slug = data().name.toLowerCase().replace(/å|ä/g,"a").replace(/ö/g,"o").replace(/[^a-z0-9]+/g,"-");
+    c.toBlob(b => { res(new File([b], `namntavla-${slug}-${color}-${f.file}.png`, {type:"image/png"})); c.width = c.height = 0; }, "image/png");
+  });
+}
+
+function download(file){
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(file); a.download = file.name;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+}
+
+$("dl").onclick = async () => { $("status").textContent = "Skapar fil…"; download(await fileFor(format)); $("status").textContent = "Klar!"; };
+$("dlall").onclick = async () => {
+  $("status").textContent = "Skapar tre filer…";
+  for(const k of Object.keys(FORMATS)){ download(await fileFor(k)); await new Promise(r => setTimeout(r, 600)); }
+  $("status").textContent = "Klart – tre filer nedladdade.";
+};
+$("share").onclick = async () => {
+  try{
+    $("status").textContent = "Förbereder…";
+    const files = []; for(const k of Object.keys(FORMATS)) files.push(await fileFor(k));
+    await navigator.share({files, title: "Namntavla " + data().name});
+    $("status").textContent = "";
+  }catch(e){ $("status").textContent = "Delningen avbröts."; }
+};
+try{
+  if(navigator.canShare && navigator.canShare({files:[new File(["x"],"t.png",{type:"image/png"})]})) $("share").hidden = false;
+}catch(e){}
+
+function lookup(){
+  const n = NAMES[$("name").value.trim().toLowerCase()];
+  if(n){ $("meaning").value = n.meaning; $("origin").value = n.origin; }
+}
+$("name").addEventListener("input", () => { lookup(); draw(); });
+["meaning","origin","extra"].forEach(id => $(id).addEventListener("input", draw));
+
+seg($("colors"), PALETTES, () => color, k => color = k);
+seg($("formats"), FORMATS, () => format, k => format = k);
+
+fetch("/tools/names.txt").then(r => r.text()).then(t => {
+  t.split("\n").forEach(l => { const p = l.split("|"); if(p.length === 5) NAMES[p[0].toLowerCase()] = {meaning:p[2], origin:p[3]}; });
+  lookup(); draw();
+}).catch(() => draw());
+
+document.fonts.load('600 60px Fraunces').then(() => document.fonts.load('400 20px "DM Sans"')).then(draw, draw);
+draw();
+</script>
+</body>
+</html>
