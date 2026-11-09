@@ -58,6 +58,10 @@
   <button class="btn alt" id="share" hidden>Dela / skicka alla tre format</button>
   <button class="btn alt" id="dlall">Ladda ner alla tre format</button>
   <div class="status" id="status"></div>
+  <h1 style="font-size:20px;margin-top:26px">Bilder till Gumroad</h1>
+  <p class="muted">Liggande produktbild med fyra färger och en kvadratisk miniatyr med namnet och färgen ovan.</p>
+  <button class="btn alt" id="cover">Skapa produktbild (liggande)</button>
+  <button class="btn alt" id="thumb">Skapa miniatyr (kvadrat)</button>
   <p class="hint">A-formatet passar A4, A3 och A2. 3:4 passar 30×40 cm. 5:7 passar 50×70 cm. Skicka gärna alla tre till kunden.</p>
 </div>
 
@@ -223,6 +227,47 @@ $("share").onclick = async () => {
 try{
   if(navigator.canShare && navigator.canShare({files:[new File(["x"],"t.png",{type:"image/png"})]})) $("share").hidden = false;
 }catch(e){}
+
+function posterCanvas(w, h, d){
+  const c = document.createElement("canvas"); c.width = w; c.height = h;
+  render(c.getContext("2d"), w, h, d); return c;
+}
+function showcase(name, col){
+  const n = NAMES[name.toLowerCase()] || {meaning:"", origin:""};
+  return {name, meaning:n.meaning, origin:n.origin, extra:"", color:col};
+}
+function shadowed(ctx, img, x, y, w, h){
+  ctx.save(); ctx.shadowColor = "rgba(40,30,20,.28)"; ctx.shadowBlur = 40; ctx.shadowOffsetY = 18;
+  ctx.drawImage(img, x, y, w, h); ctx.restore();
+}
+function saveCanvas(c, fname){
+  c.toBlob(b => { download(new File([b], fname, {type:"image/png"})); }, "image/png");
+}
+$("cover").onclick = async () => {
+  try{ await document.fonts.ready; }catch(e){}
+  const W = 2560, H = 1440, c = document.createElement("canvas"); c.width = W; c.height = H;
+  const x = c.getContext("2d");
+  x.fillStyle = "#E9E1D6"; x.fillRect(0,0,W,H);
+  const items = [["Astrid","sand"],["Arvid","salvia"],["Elsa","rosa"],["Erik","natt"]];
+  const pw = 570, ph = 760, gap = 55, left = (W - (4*pw + 3*gap))/2, top = 250;
+  items.forEach(([nm,col],i) => shadowed(x, posterCanvas(pw*2, ph*2, showcase(nm,col)), left + i*(pw+gap), top, pw, ph));
+  x.fillStyle = "#5E574F"; x.textAlign = "center";
+  x.font = '600 64px Fraunces'; x.fillText("Personlig namntavla", W/2, 150);
+  x.font = '500 40px "DM Sans"'; x.fillText("4 färger  ·  3 format  ·  levereras inom 24 timmar", W/2, 1180);
+  x.font = '400 32px "DM Sans"'; x.fillStyle = "#8A8278"; x.fillText("navi.baby", W/2, 1290);
+  saveCanvas(c, "gumroad-produktbild.png");
+  $("status").textContent = "Produktbilden är nedladdad.";
+};
+$("thumb").onclick = async () => {
+  try{ await document.fonts.ready; }catch(e){}
+  const S = 1200, c = document.createElement("canvas"); c.width = S; c.height = S;
+  const x = c.getContext("2d");
+  x.fillStyle = "#E9E1D6"; x.fillRect(0,0,S,S);
+  const ph = 1000, pw = 750;
+  shadowed(x, posterCanvas(pw*2, ph*2, data()), (S-pw)/2, (S-ph)/2 - 10, pw, ph);
+  saveCanvas(c, "gumroad-miniatyr.png");
+  $("status").textContent = "Miniatyren är nedladdad.";
+};
 
 function lookup(){
   const n = NAMES[$("name").value.trim().toLowerCase()];
