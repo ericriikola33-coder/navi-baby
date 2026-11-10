@@ -84,6 +84,9 @@
     font-size:28px;cursor:pointer;display:flex;align-items:center;justify-content:center}
   .round.no{color:var(--rose-d)} .round.yes{color:var(--sage-d)}
   .round:active{transform:scale(.92)}
+  .actions{align-items:center}
+  .round.undo{width:52px;height:52px;font-size:22px;color:var(--muted)}
+  .round.undo:disabled{opacity:.35;cursor:default}
   .hint{text-align:center;color:var(--muted);font-size:13px;margin-top:12px}
   .center{flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center}
   .big-emoji{font-size:56px;margin-bottom:6px}
@@ -133,6 +136,12 @@
     <li>Du skickar en länk till din partner, som swipar samma namn utan att se dina svar.</li>
     <li>Ni ser bara de namn ni båda gillade. Gratis, utan app och utan konto.</li>
   </ol>
+  <h2>Fler namnverktyg</h2>
+  <p>Roliga sätt att hitta inspiration – gratis och utan konto.</p>
+  <div class="cats">
+    <a href="/namngenerator/">🎲 Namngenerator</a><a href="/syskonnamn/">👫 Syskonnamn</a>
+    <a href="/efternamn/">✍️ Namn + efternamn</a><a href="/namnquiz/">✨ Namnquiz</a>
+  </div>
   <h2>Bläddra bland namnen</h2>
   <p>Läs om betydelse och ursprung för över 300 babynamn.</p>
   <div class="cats">
@@ -586,9 +595,10 @@ function renderSwipe(){
     <div class="stage">${next!==undefined?cardHTML(next,true):""}${cardHTML(cur,false)}</div>
     <div class="actions">
       <button class="round no" aria-label="Nej" onclick="decide(false)">✕</button>
+      <button class="round undo" aria-label="Ångra" onclick="undo()" ${S.idx>0?"":"disabled"}>↩</button>
       <button class="round yes" aria-label="Ja" onclick="decide(true)">♥</button>
     </div>
-    <div class="hint">Swipa höger för ja, vänster för nej</div>`;
+    <div class="hint">Swipa höger för ja, vänster för nej · ↩ ångrar senaste</div>`;
   attachDrag();
 }
 
@@ -611,6 +621,15 @@ function decide(yes){
     }
     render();
   }, 260);
+}
+
+function undo(){
+  if(busy || S.idx<=0) return;
+  S.idx--;
+  const id = S.order[S.player][S.idx], k = S.likes[S.player].indexOf(id);
+  if(k>=0) S.likes[S.player].splice(k,1);
+  track("angra");
+  render();
 }
 
 function attachDrag(){

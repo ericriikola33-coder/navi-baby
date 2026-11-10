@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="only light">
+<meta name="darkreader-lock">
+<title>Syskonnamn – hitta namn som passar ihop | navi.baby</title>
+<meta name="description" content="Skriv in storasyskonets namn och få förslag på syskonnamn i samma stil, med betydelse och ursprung.">
+<link rel="canonical" href="https://navi.baby/syskonnamn/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="sv_SE">
+<meta property="og:site_name" content="navi.baby">
+<meta property="og:url" content="https://navi.baby/syskonnamn/">
+<meta property="og:title" content="Syskonnamn – hitta namn som passar ihop | navi.baby">
+<meta property="og:description" content="Skriv in storasyskonets namn och få förslag på syskonnamn i samma stil, med betydelse och ursprung.">
+<meta property="og:image" content="https://navi.baby/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#F6F1EA">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23F6F1EA'/%3E%3Ctext x='29' y='46' font-family='Georgia,serif' font-weight='700' font-size='40' text-anchor='middle' fill='%232B2A28'%3En%3C/text%3E%3Ccircle cx='49' cy='43' r='5' fill='%23D98B7A'/%3E%3C/svg%3E">
+<script data-goatcounter="https://navibaby.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "navi.baby", "item": "https://navi.baby/"}, {"@type": "ListItem", "position": 2, "name": "Verktyg", "item": "https://navi.baby/verktyg/"}, {"@type": "ListItem", "position": 3, "name": "Syskonnamn", "item": "https://navi.baby/syskonnamn/"}]}</script>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="logo" href="/">navi<span>.</span>baby</a>
+  <nav><a class="hide-s" href="/flicknamn/">Flicknamn</a><a class="hide-s" href="/pojknamn/">Pojknamn</a><a href="/namn/">Namn</a><a href="/verktyg/">Verktyg</a><a class="cta" href="/">Swipa ♥</a></nav>
+</div></header>
+<main><div class="wrap">
+<div class="crumbs"><a href="/">navi.baby</a> › <a href="/verktyg/">Verktyg</a> › Syskonnamn</div>
+<h1>Syskonnamn</h1>
+<p class="lead">Ska bebisen få ett namn som passar ihop med storasyskonets? Skriv in namnet så föreslår vi syskonnamn i samma stil.</p>
+<div class="box tool">
+  <label for="sib">Storasyskonets namn</label><input type="text" id="sib" placeholder="T.ex. Astrid" autocomplete="off">
+  <label>Bebisen är</label><div class="seg" id="g"></div>
+  <label>Stil</label><div class="seg" id="s"></div>
+  <button class="btn full" id="go">Visa syskonnamn</button>
+</div>
+<div id="out"></div>
+<div class="box">
+  <h2>Hittat några favoriter?</h2>
+  <p>Swipa namnen var för sig med din partner och se vilka ni båda gillar.</p>
+  <a class="btn" href="/">Börja swipa namn</a>
+</div>
+<script src="/assets/names.js"></script>
+<script src="/assets/tools.js"></script>
+<script>
+const st = {g:"all", s:"auto"};
+nbSeg("g", [["all","Vet inte"],["f","Flicka"],["m","Pojke"],["u","Neutralt"]], st, "g");
+nbSeg("s", [["auto","Samma stil"],["k","Klassiskt"],["n","Modernt"]], st, "s");
+function go(){
+  const q = $("sib").value.trim();
+  if(!q){ $("out").innerHTML = '<p class="note">Skriv in ett namn först.</p>'; return; }
+  const ql = q.toLowerCase(), base = NB.find(n => n[0].toLowerCase() === ql);
+  const style = st.s !== "auto" ? st.s : (base ? base[4] : null);
+  const sy = nbSyll(q), shown = nbEsc(nbCap(q));
+  const top = NB.filter(n => n[0].toLowerCase() !== ql && (st.g==="all" || n[1]===st.g)).map(n => {
+    let p = Math.random()*1.5;
+    if(style && n[4]===style) p += 3;
+    if(base && n[3]===base[3]) p += 2;
+    if(Math.abs(n[0].length - q.length) <= 1) p += 1;
+    if(nbSyll(n[0]) === sy) p += 1;
+    if(n[0][0].toLowerCase() === ql[0]) p -= 1.5;
+    if(n[0].slice(-2).toLowerCase() === ql.slice(-2)) p -= 1;
+    return [p, n];
+  }).sort((a,b) => b[0]-a[0]).slice(0, 12).map(x => x[1]);
+  const intro = base
+    ? `${base[0]} är ett ${base[4]==="k"?"klassiskt":"modernt"} namn med ${NB_ORIGIN[base[3]]} ursprung. Här är namn som passar ihop:`
+    : `Vi har inte ${shown} i vår namnlista ännu, så förslagen bygger på namnets längd och rytm. Välj gärna stil ovan för bättre träffar.`;
+  $("out").innerHTML = `<p class="note">${intro}</p><ul class="namelist">` +
+    top.map(n => nbItem(n, n[0], shown + " & " + n[0] + " · " + n[2])).join("") + "</ul>";
+  $("go").textContent = "Visa fler förslag";
+  nbTrack("verktyg-syskonnamn");
+}
+$("go").onclick = go;
+$("sib").addEventListener("keydown", e => { if(e.key === "Enter") go(); });
+</script>
+</div></main>
+<footer class="site"><div class="wrap">
+  <div class="cols">
+    <a href="/">Swipa namn</a><a href="/namn/">Alla namn A–Ö</a>
+    <a href="/flicknamn/">Flicknamn</a><a href="/pojknamn/">Pojknamn</a>
+    <a href="/konsneutrala-namn/">Könsneutrala namn</a><a href="/nordiska-namn/">Nordiska namn</a>
+    <a href="/klassiska-namn/">Klassiska namn</a><a href="/moderna-namn/">Moderna namn</a>
+    <a href="/namngenerator/">Namngenerator</a><a href="/syskonnamn/">Syskonnamn</a>
+    <a href="/efternamn/">Namn + efternamn</a><a href="/namnquiz/">Namnquiz</a>
+    <a href="/om/">Om navi.baby</a><a href="/integritet/">Integritetspolicy</a>
+    <a href="/kontakt/">Kontakt</a>
+  </div>
+  <div class="small">© 2026 navi.baby · Hitta namnet ni båda gillar</div>
+</div></footer>
+</body>
+</html>

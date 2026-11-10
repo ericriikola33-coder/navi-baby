@@ -128,7 +128,7 @@ def head(title, desc, path, extra=""):
 <body>
 <header class="top"><div class="wrap">
   <a class="logo" href="/">navi<span>.</span>baby</a>
-  <nav><a class="hide-s" href="/flicknamn/">Flicknamn</a><a class="hide-s" href="/pojknamn/">Pojknamn</a><a href="/namn/">Alla namn</a><a class="cta" href="/">Swipa ♥</a></nav>
+  <nav><a class="hide-s" href="/flicknamn/">Flicknamn</a><a class="hide-s" href="/pojknamn/">Pojknamn</a><a href="/namn/">Namn</a><a href="/verktyg/">Verktyg</a><a class="cta" href="/">Swipa ♥</a></nav>
 </div></header>
 <main><div class="wrap">
 """
@@ -140,6 +140,8 @@ FOOT = """</div></main>
     <a href="/flicknamn/">Flicknamn</a><a href="/pojknamn/">Pojknamn</a>
     <a href="/konsneutrala-namn/">Könsneutrala namn</a><a href="/nordiska-namn/">Nordiska namn</a>
     <a href="/klassiska-namn/">Klassiska namn</a><a href="/moderna-namn/">Moderna namn</a>
+    <a href="/namngenerator/">Namngenerator</a><a href="/syskonnamn/">Syskonnamn</a>
+    <a href="/efternamn/">Namn + efternamn</a><a href="/namnquiz/">Namnquiz</a>
     <a href="/om/">Om navi.baby</a><a href="/integritet/">Integritetspolicy</a>
     <a href="/kontakt/">Kontakt</a>
   </div>
@@ -338,6 +340,216 @@ write("/kontakt/", head("Kontakt | navi.baby", "Kontakta navi.baby med frågor, 
 <h1>Kontakt</h1>
 <p class="lead">Saknar du ett namn, har du hittat ett fel eller har du en idé om hur navi.baby kan bli bättre? Vi blir glada att höra från dig.</p>
 {contact}
+</div>
+""" + FOOT)
+
+# ---------- tools ----------
+with open(os.path.join(ROOT, "assets", "names.js"), "w", encoding="utf-8") as f:
+    f.write("const NB = " + json.dumps([[n["name"], n["g"], n["meaning"], n["origin"], n["style"], n["slug"]] for n in NAMES], ensure_ascii=False, separators=(",", ":")) + ";\n")
+    f.write("const NB_ORIGIN = " + json.dumps({k: v[0] for k, v in ORIGIN.items()}, ensure_ascii=False) + ";\n")
+
+SCRIPTS = '<script src="/assets/names.js"></script>\n<script src="/assets/tools.js"></script>\n'
+CTA = """<div class="box">
+  <h2>Hittat några favoriter?</h2>
+  <p>Swipa namnen var för sig med din partner och se vilka ni båda gillar.</p>
+  <a class="btn" href="/">Börja swipa namn</a>
+</div>
+"""
+def tool_page(path, title, desc, h1, lead, body, script):
+    URLS.append(path)
+    write(path, head(title, desc, path, breadcrumbs_ld([("navi.baby", "/"), ("Verktyg", "/verktyg/"), (h1, path)]))
+          + f'<div class="crumbs"><a href="/">navi.baby</a> › <a href="/verktyg/">Verktyg</a> › {h1}</div>\n<h1>{h1}</h1>\n<p class="lead">{lead}</p>\n'
+          + body + CTA + SCRIPTS + "<script>\n" + script + "\n</script>\n" + FOOT)
+
+GSEG = '[["all","Alla"],["f","Flicka"],["m","Pojke"],["u","Neutralt"]]'
+
+tool_page("/namngenerator/", "Namngenerator – slumpa fram ett babynamn | navi.baby",
+  "Slumpa fram babynamn med betydelse. Välj flicknamn eller pojknamn, klassiskt eller modernt, nordiskt eller internationellt och max antal bokstäver.",
+  "Namngenerator", "Fastnat i namnvalet? Ställ in vad ni gillar och låt slumpen ge er ett förslag – med betydelse och ursprung.",
+  """<div class="box tool">
+  <label>Kön</label><div class="seg" id="g"></div>
+  <label>Stil</label><div class="seg" id="s"></div>
+  <label>Ursprung</label><div class="seg" id="o"></div>
+  <label>Längd</label><div class="seg" id="len"></div>
+  <label for="letter">Börjar på (valfritt)</label><input type="text" id="letter" maxlength="1" placeholder="T.ex. A" autocomplete="off">
+  <button class="btn full" id="go">🎲 Ge mig ett namn</button>
+  <p class="note" id="count"></p>
+</div>
+<div id="out"></div>
+""", """const st = {g:"all", s:"all", o:"all", len:"all"};
+let queue = [];
+function pool(){
+  const L = $("letter").value.trim().toUpperCase();
+  return NB.filter(n => (st.g==="all" || n[1]===st.g) && (st.s==="all" || n[4]===st.s)
+    && (st.o==="all" || (st.o==="nord") === NB_NORDIC.includes(n[3]))
+    && (st.len==="all" || n[0].length <= +st.len) && (!L || n[0].toUpperCase().startsWith(L)));
+}
+function reset(){ queue = []; const c = pool().length; $("count").textContent = c + (c===1 ? " namn matchar dina val" : " namn matchar dina val"); }
+nbSeg("g", """ + GSEG + """, st, "g", reset);
+nbSeg("s", [["all","Alla"],["k","Klassiskt"],["n","Modernt"]], st, "s", reset);
+nbSeg("o", [["all","Alla"],["nord","Nordiskt"],["intl","Internationellt"]], st, "o", reset);
+nbSeg("len", [["all","Alla"],["4","Max 4"],["5","Max 5"],["6","Max 6"]], st, "len", reset);
+$("letter").addEventListener("input", reset);
+function go(){
+  if(!queue.length) queue = nbShuffle(pool());
+  if(!queue.length){ $("out").innerHTML = '<div class="bigcard"><p>Inga namn matchar de valen. Prova att ändra något.</p></div>'; return; }
+  const n = queue.pop();
+  $("out").innerHTML = `<div class="bigcard"><span class="tag">${{f:"Flicknamn",m:"Pojknamn",u:"Könsneutralt"}[n[1]]}</span><span class="tag">${n[4]==="k"?"Klassiskt":"Modernt"}</span>
+    <div class="bn">${n[0]}</div><p>${nbCap(n[2])}</p><p>Ursprung: ${NB_ORIGIN[n[3]]}</p>
+    <p><a class="btn alt" href="/namn/${n[5]}/">Läs mer om ${n[0]}</a></p></div>`;
+  $("go").textContent = "🎲 Ett namn till";
+  nbTrack("verktyg-generator");
+}
+$("go").onclick = go; reset();""")
+
+tool_page("/syskonnamn/", "Syskonnamn – hitta namn som passar ihop | navi.baby",
+  "Skriv in storasyskonets namn och få förslag på syskonnamn i samma stil, med betydelse och ursprung.",
+  "Syskonnamn", "Ska bebisen få ett namn som passar ihop med storasyskonets? Skriv in namnet så föreslår vi syskonnamn i samma stil.",
+  """<div class="box tool">
+  <label for="sib">Storasyskonets namn</label><input type="text" id="sib" placeholder="T.ex. Astrid" autocomplete="off">
+  <label>Bebisen är</label><div class="seg" id="g"></div>
+  <label>Stil</label><div class="seg" id="s"></div>
+  <button class="btn full" id="go">Visa syskonnamn</button>
+</div>
+<div id="out"></div>
+""", """const st = {g:"all", s:"auto"};
+nbSeg("g", """ + GSEG.replace('"Alla"', '"Vet inte"') + """, st, "g");
+nbSeg("s", [["auto","Samma stil"],["k","Klassiskt"],["n","Modernt"]], st, "s");
+function go(){
+  const q = $("sib").value.trim();
+  if(!q){ $("out").innerHTML = '<p class="note">Skriv in ett namn först.</p>'; return; }
+  const ql = q.toLowerCase(), base = NB.find(n => n[0].toLowerCase() === ql);
+  const style = st.s !== "auto" ? st.s : (base ? base[4] : null);
+  const sy = nbSyll(q), shown = nbEsc(nbCap(q));
+  const top = NB.filter(n => n[0].toLowerCase() !== ql && (st.g==="all" || n[1]===st.g)).map(n => {
+    let p = Math.random()*1.5;
+    if(style && n[4]===style) p += 3;
+    if(base && n[3]===base[3]) p += 2;
+    if(Math.abs(n[0].length - q.length) <= 1) p += 1;
+    if(nbSyll(n[0]) === sy) p += 1;
+    if(n[0][0].toLowerCase() === ql[0]) p -= 1.5;
+    if(n[0].slice(-2).toLowerCase() === ql.slice(-2)) p -= 1;
+    return [p, n];
+  }).sort((a,b) => b[0]-a[0]).slice(0, 12).map(x => x[1]);
+  const intro = base
+    ? `${base[0]} är ett ${base[4]==="k"?"klassiskt":"modernt"} namn med ${NB_ORIGIN[base[3]]} ursprung. Här är namn som passar ihop:`
+    : `Vi har inte ${shown} i vår namnlista ännu, så förslagen bygger på namnets längd och rytm. Välj gärna stil ovan för bättre träffar.`;
+  $("out").innerHTML = `<p class="note">${intro}</p><ul class="namelist">` +
+    top.map(n => nbItem(n, n[0], shown + " & " + n[0] + " · " + n[2])).join("") + "</ul>";
+  $("go").textContent = "Visa fler förslag";
+  nbTrack("verktyg-syskonnamn");
+}
+$("go").onclick = go;
+$("sib").addEventListener("keydown", e => { if(e.key === "Enter") go(); });""")
+
+tool_page("/efternamn/", "Namn som passar till efternamnet | navi.baby",
+  "Skriv in ert efternamn och se hur babynamn ser ut och låter tillsammans med det – med initialer och förslag som har bra rytm.",
+  "Namn + efternamn", "Hur låter namnet ihop med efternamnet? Skriv in det så visar vi förslag med bra rytm och klang – och vilka initialer det blir.",
+  """<div class="box tool">
+  <label for="sn">Efternamn</label><input type="text" id="sn" placeholder="T.ex. Lindberg" autocomplete="off">
+  <label>Kön</label><div class="seg" id="g"></div>
+  <label>Stil</label><div class="seg" id="s"></div>
+  <button class="btn full" id="go">Visa förslag</button>
+  <p class="note">Efternamnet stannar i din webbläsare och sparas inte.</p>
+</div>
+<div id="out"></div>
+<h2>Så väljer vi förslagen</h2>
+<p>Ett för- och efternamn brukar låta bäst när de har olika antal stavelser, när förnamnet inte slutar på samma ljud som efternamnet börjar med och när de inte rimmar. Förslagen här följer de tumreglerna – men det viktigaste är förstås att ni själva säger namnet högt och känner efter.</p>
+""", """const st = {g:"all", s:"all"};
+nbSeg("g", """ + GSEG + """, st, "g");
+nbSeg("s", [["all","Alla"],["k","Klassiskt"],["n","Modernt"]], st, "s");
+const V = "aeiouyåäö";
+function go(){
+  const raw = $("sn").value.trim();
+  if(!raw){ $("out").innerHTML = '<p class="note">Skriv in ett efternamn först.</p>'; return; }
+  const sn = nbCap(raw), sl = sn.toLowerCase(), ss = nbSyll(sn), shown = nbEsc(sn);
+  const top = NB.filter(n => (st.g==="all" || n[1]===st.g) && (st.s==="all" || n[4]===st.s)).map(n => {
+    const f = n[0].toLowerCase(), fs = nbSyll(f);
+    let p = Math.random()*1.5;
+    if(fs !== ss) p += 2;
+    if(f.slice(-1) === sl[0]) p -= 3;
+    else if(V.includes(f.slice(-1)) && V.includes(sl[0])) p -= 1.5;
+    if(f.slice(-2) === sl.slice(-2)) p -= 2;
+    if(ss >= 3 && fs <= 2) p += 1;
+    if(ss === 1 && fs >= 2) p += 1;
+    return [p, n, fs];
+  }).sort((a,b) => b[0]-a[0]).slice(0, 12);
+  if(!top.length){ $("out").innerHTML = '<p class="note">Inga namn matchar de valen.</p>'; return; }
+  $("out").innerHTML = `<p class="note">Förslag som har bra rytm ihop med ${shown}:</p><ul class="namelist">` +
+    top.map(([p,n,fs]) => nbItem(n, n[0] + " " + shown, "Initialer " + n[0][0] + "." + shown[0] + ". · " + fs + " + " + ss + " stavelser · " + n[2])).join("") + "</ul>";
+  $("go").textContent = "Visa fler förslag";
+  nbTrack("verktyg-efternamn");
+}
+$("go").onclick = go;
+$("sn").addEventListener("keydown", e => { if(e.key === "Enter") go(); });""")
+
+tool_page("/namnquiz/", "Namnquiz – vilken namnstil är ni? | navi.baby",
+  "Svara på fem snabba frågor och få veta vilken namnstil ni har – plus tio babynamn som passar er.",
+  "Namnquiz: vilken namnstil är ni?", "Fem snabba frågor. Sedan får ni er namnstil och tio namn som passar den.",
+  """<div id="quiz"></div>
+""", """const Q = [
+  ["Vem väntar ni?", [["En flicka", {g:"f"}], ["En pojke", {g:"m"}], ["Vet inte än – eller så spelar det ingen roll", {g:"all"}]]],
+  ["Hur ser drömhelgen ut?", [["Stuga i skogen, brasa och stickade sockor", {grp:"nord"}], ["Storstad, caféer och nya smaker", {grp:"intl"}], ["Söndagsmiddag med hela släkten", {grp:"trad"}]]],
+  ["Vilket hem känns mest som ert?", [["Ärvda möbler och loppisfynd", {s:"k"}], ["Ljust, stilrent och nytt", {s:"n"}], ["En salig blandning", {s:"all"}]]],
+  ["Namnet ska helst vara …", [["Kort och enkelt", {len:"short"}], ["Långt och melodiskt", {len:"long"}], ["Det spelar ingen roll", {len:"all"}]]],
+  ["Ska namnet fungera utomlands?", [["Ja, det är viktigt", {abroad:"yes"}], ["Nej, gärna riktigt svenskt", {abroad:"no"}], ["Det spelar ingen roll", {abroad:"all"}]]]
+];
+const TRAD = ["Hebreiskt","Grekiskt","Latin","Germanskt"];
+const LABEL = {
+  nord:{k:"Nordisk klassiker", n:"Modern nordisk", all:"Nordisk själ"},
+  intl:{k:"Tidlös världsmedborgare", n:"Modern världsmedborgare", all:"Världsmedborgare"},
+  trad:{k:"Varm traditionalist", n:"Modern med rötter", all:"Traditionalist"}
+};
+const TEXT = {
+  nord:"Ni dras till namn med rötter i Norden – namn som bär på natur, styrka och gamla berättelser.",
+  intl:"Ni gillar namn som känns hemma var som helst i världen och som är lätta att uttala på många språk.",
+  trad:"Ni uppskattar namn med lång historia – namn som funnits i generationer och som aldrig går ur tiden."
+};
+let i = 0, a = {};
+function show(){
+  if(i >= Q.length) return result();
+  const [q, opts] = Q[i];
+  $("quiz").innerHTML = `<div class="box"><p class="muted">Fråga ${i+1} av ${Q.length}</p><div class="qbar"><i style="width:${i/Q.length*100}%"></i></div>
+    <h2>${q}</h2><div class="qopts">${opts.map((o,k) => `<button data-k="${k}">${o[0]}</button>`).join("")}</div></div>`;
+  $("quiz").querySelectorAll("button").forEach(b => b.onclick = () => { Object.assign(a, opts[+b.dataset.k][1]); i++; show(); });
+}
+function result(){
+  const top = NB.filter(n => a.g==="all" || n[1]===a.g).map(n => {
+    let p = Math.random();
+    const nord = NB_NORDIC.includes(n[3]), sv = /[åäö]/i.test(n[0]);
+    if(a.grp==="nord" && nord) p += 3;
+    if(a.grp==="trad" && TRAD.includes(n[3])) p += 3;
+    if(a.grp==="intl" && !nord) p += TRAD.includes(n[3]) ? 1.5 : 3;
+    if(a.s!=="all" && n[4]===a.s) p += 3;
+    if(a.len==="short") p += n[0].length<=4 ? 2 : n[0].length===5 ? 1 : 0;
+    if(a.len==="long" && n[0].length>=6) p += 2;
+    if(a.abroad==="yes" && sv) p -= 3;
+    if(a.abroad==="no") p += (sv ? 1 : 0) + (nord ? 1 : 0);
+    return [p, n];
+  }).sort((x,y) => y[0]-x[0]).slice(0, 10).map(x => x[1]);
+  const label = LABEL[a.grp][a.s];
+  $("quiz").innerHTML = `<div class="bigcard"><p>Er namnstil är</p><div class="bn" style="font-size:40px">${label}</div><p>${TEXT[a.grp]}</p>
+    <p><button class="btn alt" id="share" hidden>Dela resultatet</button></p></div>
+    <h2>Tio namn som passar er</h2><ul class="namelist">${top.map(n => nbItem(n)).join("")}</ul>
+    <p><button class="btn alt" id="again">Gör om quizet</button></p>`;
+  $("again").onclick = () => { i = 0; a = {}; show(); window.scrollTo(0,0); };
+  try{ if(navigator.share){ $("share").hidden = false; $("share").onclick = () => navigator.share({title:"Namnquiz – navi.baby", text:"Vår namnstil är ”" + label + "”. Vilken är er?", url:"https://navi.baby/namnquiz/"}).catch(()=>{}); } }catch(e){}
+  nbTrack("verktyg-quiz-klar"); window.scrollTo(0,0);
+}
+show();""")
+
+URLS.append("/verktyg/")
+write("/verktyg/", head("Namnverktyg – generator, syskonnamn och quiz | navi.baby",
+  "Gratis verktyg för att hitta babynamn: swipa med din partner, slumpa namn, hitta syskonnamn, testa namn med efternamnet och gör namnquizet.", "/verktyg/",
+  breadcrumbs_ld([("navi.baby", "/"), ("Verktyg", "/verktyg/")])) + """<div class="crumbs"><a href="/">navi.baby</a> › Verktyg</div>
+<h1>Namnverktyg</h1>
+<p class="lead">Fem sätt att hitta inspiration till babynamnet. Allt är gratis och fungerar direkt i mobilen, utan konto.</p>
+<div class="cats" style="grid-template-columns:1fr">
+  <a href="/"><b>💞 Swipa namn tillsammans</b><small>Swipa var för sig och se bara namnen ni båda gillar.</small></a>
+  <a href="/namngenerator/"><b>🎲 Namngenerator</b><small>Ställ in stil, ursprung och längd – och låt slumpen ge er ett namn.</small></a>
+  <a href="/syskonnamn/"><b>👫 Syskonnamn</b><small>Skriv in storasyskonets namn och få förslag i samma stil.</small></a>
+  <a href="/efternamn/"><b>✍️ Namn + efternamn</b><small>Se hur namnen låter med ert efternamn, och vilka initialer det blir.</small></a>
+  <a href="/namnquiz/"><b>✨ Namnquiz</b><small>Fem frågor som avslöjar er namnstil och ger tio passande namn.</small></a>
 </div>
 """ + FOOT)
 
