@@ -120,6 +120,8 @@ def head(title, desc, path, extra=""):
 <meta name="theme-color" content="#F6F1EA">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23F6F1EA'/%3E%3Ctext x='29' y='46' font-family='Georgia,serif' font-weight='700' font-size='40' text-anchor='middle' fill='%232B2A28'%3En%3C/text%3E%3Ccircle cx='49' cy='43' r='5' fill='%23D98B7A'/%3E%3C/svg%3E">
 <script data-goatcounter="https://navibaby.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<meta name="google-adsense-account" content="ca-pub-9723217552460349">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9723217552460349" crossorigin="anonymous"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
@@ -325,8 +327,8 @@ write("/integritet/", head("Integritetspolicy | navi.baby", "Så hanterar navi.b
 <p>Vi använder GoatCounter för att räkna besök och se vilka delar av sidan som används, till exempel hur många som skapar en delningslänk. GoatCounter använder inga cookies och samlar inte in personuppgifter som namn eller e-post. Statistiken är anonym och används bara för att förbättra sidan.</p>
 <h2>Teckensnitt och värdtjänst</h2>
 <p>Sidan använder teckensnitt från Google Fonts, vilket innebär att din webbläsare hämtar dem från Googles servrar. Sidan drivs via GitHub Pages. Både Google och GitHub kan, som de flesta webbtjänster, tillfälligt behandla tekniska uppgifter som IP-adress för att leverera innehållet.</p>
-<h2>Annonser</h2>
-<p>Om vi i framtiden visar annonser kommer denna policy att uppdateras, och du kommer att få möjlighet att ge eller neka samtycke innan några annonscookies används.</p>
+<h2>Annonser och cookies</h2>
+<p>navi.baby kan visa annonser via Google AdSense. Google och dess partner kan använda cookies för att visa annonser baserat på dina tidigare besök på den här och andra webbplatser. Du kan läsa mer om hur Google använder uppgifter på <a href="https://policies.google.com/technologies/ads">policies.google.com/technologies/ads</a> och välja bort anpassade annonser i Googles <a href="https://adssettings.google.com">annonsinställningar</a>. Besökare i EU/EES får frågan om samtycke innan personanpassade annonser visas.</p>
 <h2>Frågor</h2>
 <p>Har du frågor om hur uppgifter hanteras? Kontakta oss via <a href="/kontakt/">kontaktsidan</a>.</p>
 </div>
@@ -566,6 +568,7 @@ for u in URLS:
     sm += f"  <url><loc>{SITE}{u}</loc><lastmod>{TODAY}</lastmod></url>\n"
 sm += "</urlset>\n"
 write("/sitemap.xml", sm)
+write("/ads.txt", "google.com, pub-9723217552460349, DIRECT, f08c47fec0942fa0\n")
 write("/robots.txt", f"User-agent: *\nAllow: /\nDisallow: /tools/\n\nSitemap: {SITE}/sitemap.xml\n")
 
 # ---------- index.html: update NAMES + static section ----------
