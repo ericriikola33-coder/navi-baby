@@ -119,6 +119,7 @@
   .swatches{display:flex;gap:10px;justify-content:center;margin:14px 0 6px}
   .sw{width:36px;height:36px;border-radius:50%;border:3px solid transparent;cursor:pointer}
   .sw.on{border-color:var(--ink)}
+  .buy{display:block;text-align:center;background:var(--ink);color:#fff;text-decoration:none;font-weight:700;padding:14px;border-radius:14px;margin:14px 0 4px}
   .note{font-size:13px;color:var(--muted);text-align:center;line-height:1.45;margin:8px 0 0}
   .linkbox{width:100%;min-height:96px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--card);
     font:inherit;font-size:13px;color:var(--muted);resize:none;word-break:break-all;margin-top:6px}
@@ -138,6 +139,9 @@
     <li>Du skickar en länk till din partner, som swipar samma namn utan att se dina svar.</li>
     <li>Ni ser bara de namn ni båda gillade. Gratis, utan app och utan konto.</li>
   </ol>
+  <h2>Namnet på väggen</h2>
+  <p>Hittat namnet? Gör det till en personlig namntavla för barnrummet – fyra färger, tre format, levereras till din e-post inom 24 timmar.</p>
+  <a class="buy" href="https://riikola.gumroad.com/l/namntavla" target="_blank" rel="noopener" onclick="track('kop-klick-start')">Köp namntavla – 69 kr</a>
   <h2>Fler namnverktyg</h2>
   <p>Roliga sätt att hitta inspiration – gratis och utan konto.</p>
   <div class="cats">
@@ -159,7 +163,8 @@
     <div class="top"><b>Namntavla – förhandsvisning</b><button class="link-btn" id="closeModal">Stäng ✕</button></div>
     <div class="poster-wrap" id="poster"></div>
     <div class="swatches" id="swatches"></div>
-    <p class="note">Så här skulle en printable-tavla kunna se ut i en Etsy-butik. Köparen väljer namn och färg och laddar ner filen.</p>
+    <a class="buy" id="buyBtn" href="https://riikola.gumroad.com/l/namntavla" target="_blank" rel="noopener" onclick="track('kop-klick-resultat')">Köp tavlan i tryckkvalitet – 69 kr</a>
+    <p class="note">Du får tavlan med namnet och färgen du väljer som digital fil i tre format (A4/A3, 30×40, 50×70) – klar att skriva ut. Skriv in namnet och färgen i kassan.</p>
   </div>
 </div>
 

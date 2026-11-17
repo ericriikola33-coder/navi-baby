@@ -248,6 +248,8 @@ for n in NAMES:
 <h2>{e(n['name'])} som namntavla</h2>
 <p>Ett namn på väggen i barnrummet blir en fin detalj. Så här kan en enkel namntavla med {e(n['name'])} se ut:</p>
 <div class="poster">{poster_svg(n)}</div>
+<p><a class="btn" href="https://riikola.gumroad.com/l/namntavla" target="_blank" rel="noopener" onclick="try{{goatcounter.count({{path:'kop-klick-namnsida',event:true}})}}catch(e){{}}">Köp en namntavla med {e(n['name'])} – 69 kr</a></p>
+<p class="muted">Digital fil i tre format (A4/A3, 30×40, 50×70) och fyra färger. Skriv namnet och färgen i kassan – tavlan kommer till din e-post inom 24 timmar.</p>
 
 {'<h2>Fler namn på ' + e(n['name'][0]) + '</h2>' + chips(same_letter) if same_letter else ''}
 """
