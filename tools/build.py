@@ -558,7 +558,7 @@ write("/verktyg/", head("Namnverktyg – generator, syskonnamn och quiz | navi.b
 """ + FOOT)
 
 # 404
-write("/404.html", head("Sidan hittades inte | navi.baby", "Sidan finns inte.", "/404.html") + """
+write("/404.html", head("Sidan hittades inte | navi.baby", "Sidan finns inte.", "/404.html").replace('<link rel="canonical" href="https://navi.baby/404.html">', '<meta name="robots" content="noindex">') + """
 <h1>Hoppsan – sidan finns inte</h1>
 <p class="lead">Länken kan vara fel eller så har sidan flyttats.</p>
 <p><a class="btn" href="/">Till startsidan</a> &nbsp; <a class="btn alt" href="/namn/">Alla namn</a></p>
