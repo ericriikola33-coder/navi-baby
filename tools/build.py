@@ -130,7 +130,7 @@ def head(title, desc, path, extra=""):
 <body>
 <header class="top"><div class="wrap">
   <a class="logo" href="/">navi<span>.</span>baby</a>
-  <nav><a class="hide-s" href="/flicknamn/">Flicknamn</a><a class="hide-s" href="/pojknamn/">Pojknamn</a><a href="/namn/">Namn</a><a href="/verktyg/">Verktyg</a><a class="cta" href="/">Swipa ♥</a></nav>
+  <nav><a class="hide-s" href="/flicknamn/">Flicknamn</a><a class="hide-s" href="/pojknamn/">Pojknamn</a><a href="/namn/">Namn</a><a href="/verktyg/">Verktyg</a><a class="hide-s" href="/guider/">Guider</a><a class="cta" href="/">Swipa ♥</a></nav>
 </div></header>
 <main><div class="wrap">
 """
@@ -144,6 +144,7 @@ FOOT = """</div></main>
     <a href="/klassiska-namn/">Klassiska namn</a><a href="/moderna-namn/">Moderna namn</a>
     <a href="/namngenerator/">Namngenerator</a><a href="/syskonnamn/">Syskonnamn</a>
     <a href="/efternamn/">Namn + efternamn</a><a href="/namnquiz/">Namnquiz</a>
+    <a href="/guider/">Guider</a><a href="/guider/regler-for-namn/">Regler för namn</a>
     <a href="/om/">Om navi.baby</a><a href="/integritet/">Integritetspolicy</a>
     <a href="/kontakt/">Kontakt</a>
   </div>
@@ -190,6 +191,19 @@ def cat_for_gender(g):
     return {"f": ("Flicknamn", "/flicknamn/"), "m": ("Pojknamn", "/pojknamn/"), "u": ("Könsneutrala namn", "/konsneutrala-namn/")}[g]
 
 # ---------- name pages ----------
+TEXTS = json.load(open(os.path.join(ROOT, "tools", "texts.json"), encoding="utf-8"))
+BY_NAME = {n["name"].lower(): n for n in NAMES}
+def syll(s):
+    return max(1, len(re.findall(r"[aeiouyåäöé]+", s.lower())))
+AVG_LEN = sum(len(n["name"]) for n in NAMES) / len(NAMES)
+def name_link(word):
+    x = BY_NAME.get(word.lower())
+    return f'<a href="/namn/{x["slug"]}/">{e(word)}</a>' if x else e(word)
+def faq_ld(qas):
+    return '<script type="application/ld+json">' + json.dumps({"@context": "https://schema.org", "@type": "FAQPage",
+        "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in qas]},
+        ensure_ascii=False) + "</script>\n"
+
 URLS = ["/"]
 for n in NAMES:
     adj, origin_text = ORIGIN[n["origin"]]
@@ -213,7 +227,30 @@ for n in NAMES:
     letters = len(n["name"])
     desc = f"{n['name']} är ett {style_word} {G_NOUN[n['g']]} med {adj} ursprung. {meaning_sentence(n)} Se liknande namn och swipa babynamn med din partner."
     title = f"{n['name']} – namnets betydelse och ursprung | navi.baby"
-    ld = breadcrumbs_ld([("navi.baby", "/"), (cat_name, cat_path), (n["name"], path)])
+    T = TEXTS.get(n["slug"])
+    sy = syll(n["name"])
+    last = n["name"][-1].lower()
+    length_word = "kortare än" if letters < AVG_LEN - 0.5 else ("längre än" if letters > AVG_LEN + 0.5 else "ungefär lika långt som")
+    shape = (f"{n['name']} har {letters} bokstäver och {sy} {'stavelse' if sy == 1 else 'stavelser'}, vilket gör det {length_word} de flesta namnen på navi.baby. "
+             f"Namnet börjar på {n['name'][0]} och slutar på {'en vokal, vilket ofta ger en mjuk klang' if last in 'aeiouyåäöé' else 'en konsonant, vilket ofta ger en tydlig och distinkt klang'}.")
+    about = ("".join(f"<p>{e(x)}</p>" for x in T["about"]) + f"<p>{e(origin_text)}</p>") if T else f"<p>{e(origin_text)}</p><p>{e(style_sentence)}</p>"
+    extra_facts = f'<div class="fact"><b>Stavelser</b><span>{sy}</span></div>'
+    if T and T["nick"]:
+        extra_facts += f'<div class="fact wide"><b>Smeknamn</b><span>{", ".join(e(x) for x in T["nick"])}</span></div>'
+    if T and T["variants"]:
+        extra_facts += f'<div class="fact wide"><b>Varianter</b><span>{", ".join(name_link(x) for x in T["variants"])}</span></div>'
+    sib_names = ", ".join(x["name"] for x in siblings[:4])
+    qas = [
+        (f"Vad betyder namnet {n['name']}?", f"{n['name']} är ett {G_NOUN[n['g']]} med {adj} ursprung. {meaning_sentence(n)}"),
+        (f"Var kommer namnet {n['name']} ifrån?", f"{n['name']} har {adj} ursprung. {origin_text}"),
+        (f"Är {n['name']} ett klassiskt eller modernt namn?", style_sentence),
+        (f"Hur många bokstäver och stavelser har {n['name']}?", f"{n['name']} har {letters} bokstäver och {sy} {'stavelse' if sy == 1 else 'stavelser'}."),
+        (f"Vilka syskonnamn passar ihop med {n['name']}?", f"Några namn i samma stil som {n['name']} är {sib_names}."),
+    ]
+    if T and T["nick"]:
+        qas.insert(3, (f"Vilka smeknamn finns för {n['name']}?", f"Vanliga smeknamn för {n['name']} är {', '.join(T['nick'])}."))
+    faq_html = '<h2>Vanliga frågor om ' + e(n['name']) + '</h2>' + "".join(f'<h3>{e(q)}</h3><p>{e(a)}</p>' for q, a in qas)
+    ld = breadcrumbs_ld([("navi.baby", "/"), (cat_name, cat_path), (n["name"], path)]) + faq_ld(qas)
     body = f"""<div class="crumbs"><a href="/">navi.baby</a> › <a href="{cat_path}">{cat_name}</a> › {e(n['name'])}</div>
 <span class="tag">{G_LABEL[n['g']]}</span><span class="tag">{S_LABEL[n['style']]}</span>
 <h1 class="name">{e(n['name'])}</h1>
@@ -225,11 +262,13 @@ for n in NAMES:
   <div class="fact"><b>Kön</b><span>{G_LABEL[n['g']]}</span></div>
   <div class="fact"><b>Stil</b><span>{S_LABEL[n['style']]}</span></div>
   <div class="fact"><b>Bokstäver</b><span>{letters}</span></div>
+  {extra_facts}
 </div>
 
 <h2>Om namnet {e(n['name'])}</h2>
-<p>{e(origin_text)}</p>
-<p>{e(style_sentence)}</p>
+{about}
+<h2>Så låter {e(n['name'])}</h2>
+<p>{e(shape)}</p>
 
 <div class="box">
   <h2>Ska ni välja namn tillsammans?</h2>
@@ -250,6 +289,8 @@ for n in NAMES:
 <div class="poster">{poster_svg(n)}</div>
 <p><a class="btn" href="https://riikola.gumroad.com/l/namntavla" target="_blank" rel="noopener" onclick="try{{goatcounter.count({{path:'kop-klick-namnsida',event:true}})}}catch(e){{}}">Köp en namntavla med {e(n['name'])} – 69 kr</a></p>
 <p class="muted">Digital fil i tre format (A4/A3, 30×40, 50×70) och fyra färger. Skriv namnet och färgen i kassan – tavlan kommer till din e-post inom 24 timmar.</p>
+
+{faq_html}
 
 {'<h2>Fler namn på ' + e(n['name'][0]) + '</h2>' + chips(same_letter) if same_letter else ''}
 """
@@ -346,6 +387,8 @@ write("/kontakt/", head("Kontakt | navi.baby", "Kontakta navi.baby med frågor, 
 {contact}
 </div>
 """ + FOOT)
+
+exec(open(os.path.join(ROOT, "tools", "guides.py"), encoding="utf-8").read())
 
 # ---------- tools ----------
 with open(os.path.join(ROOT, "assets", "names.js"), "w", encoding="utf-8") as f:
